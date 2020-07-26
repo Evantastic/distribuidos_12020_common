@@ -1,0 +1,3 @@
+redis
+cassandra-driver
+confluent-kafka
