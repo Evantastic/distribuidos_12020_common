@@ -99,7 +99,7 @@ class Cassandra:
 
 class Redis:
     """
-    Clase que engloba los metodos encargados de conectarse a Cassandra. Ofrece un metodo
+    Clase que engloba los metodos encargados de conectarse a Redis. Ofrece un metodo
     estatico: getInstance()
     """
     __instance = None
@@ -107,16 +107,12 @@ class Redis:
     def getInstance():
         """
         Metodo estatico que sigue el patron de diseno Singleton. Para su funcionamiento
-        require las siguientes variables de entorno:
-        - CASSANDRA_USER: usuario de Cassandra
-        - CASSANDRA_PASSWORD: contrasena de Cassandra
-        - CASSANDRA_HOST: direccion de Cassandra
-        - CASSANDRA_PORT: puerto de Cassandra
-        - CASSANDRA_KEYSPACE: keyspace de Cassandra
-        Si es que el server no se encuentra disponible, intenta reconectarse 6 veces con
-        un intervalo de 10 segundos entre si
+        requiere las siguientes variables de entorno:
+        - REDIS_HOST: host de Redis
+        - REDIS_PORT: port de Redis
+        - REDIS_DB: nombre de la base de datos de redis
 
-        Retorna una instancia de Cassandra conectada al keyspace indicado
+        Retorna una instancia de Redis conectada a la base de datos especificada
         """
         if not Redis.__instance:
             host = getenv('REDIS_HOST')
