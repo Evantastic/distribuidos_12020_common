@@ -57,10 +57,11 @@ class Kafka:
 
 class Cassandra:
     """
-    Clase que engloba los metodos encargados de conectarse a Cassandra. Ofrece un metodo
-    estatico: getInstance()
+    Clase que engloba los metodos encargados de conectarse a Cassandra. Ofrece 3 metodos
+    estaticos: getInstance(), addQuery(string), query(string)
     """
     __instance = None
+    __statement = None
     @staticmethod
     def getInstance():
         """
@@ -96,6 +97,19 @@ class Cassandra:
                     tries = tries + 1
                     sleep(sleepTime)
         return Cassandra.__instance
+    @staticmethod
+    def addQuery(statement):
+        """
+        Metodo estatico que agrega una expresion a Cassandra para realizar querys.
+        Ejemplo: 'SELECT info FROM deteccion WHERE objectid=?'
+        """
+        Cassandra.__statement = Cassandra.__instance.prepare(statement)
+    @staticmethod
+    def query(query):
+        """
+        Metodo estatico que ejecuta la expresion agregada en addQuery()
+        """
+        return Cassandra.__instance.execute(Cassandra.__statement, [query])
 
 class Redis:
     """
