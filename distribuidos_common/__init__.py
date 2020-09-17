@@ -130,7 +130,7 @@ class Redis:
         Redis.__instance.set(key, value)
     @staticmethod
     def get(key):
-        Redis.__instance.get(key).decode('utf-8')
+        return Redis.__instance.get(key).decode('utf-8')
 
 if __name__ == "__main__":
     pass
