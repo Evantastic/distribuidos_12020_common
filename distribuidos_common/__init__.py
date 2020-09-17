@@ -128,16 +128,16 @@ class Redis:
         return Redis.__instance
     @staticmethod
     def set(key, value):
-    """
-    Metodo estatico encargado de setear un valor asociado a una llave
-    """
+        """
+        Metodo estatico encargado de setear un valor asociado a una llave
+        """
         Redis.__instance.set(key, value)
     @staticmethod
     def get(key):
-    """
-    Metodo estatico encargado de obtener el valor dado una llave.
-    Corresponde a un string con codificacion utf-8
-    """
+        """
+        Metodo estatico encargado de obtener el valor dado una llave.
+        Corresponde a un string con codificacion utf-8
+        """
         return Redis.__instance.get(key).decode('utf-8')
 
 if __name__ == "__main__":
