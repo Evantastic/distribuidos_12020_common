@@ -125,6 +125,12 @@ class Redis:
             password = getenv('REDIS_PASSWORD')
             Redis.__instance = getRedis(host=host, port=port, db=db, password=password)
         return Redis.__instance
+    @staticmethod
+    def set(key, value):
+        Redis.__instance.set(key, value)
+    @staticmethod
+    def get(key):
+        Redis.__instance.get(key).decode('utf-8')
 
 if __name__ == "__main__":
     pass
