@@ -39,6 +39,12 @@ class Kafka:
             Kafka.__consumer.subscribe([topic])
         return Kafka.__consumer
     @staticmethod
+    def get():
+        """
+        Metodo estatico que consume un mensaje desde el topico
+        """
+        return Kafka.__consumer.poll(1.0)
+    @staticmethod
     def getProducer():
         """
         Metodo estatico que sigue el patron de diseno Singleton. Para su funcionamiento
