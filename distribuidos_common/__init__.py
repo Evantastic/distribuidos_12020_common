@@ -36,7 +36,7 @@ class Kafka:
                 'group.id': group,
                 'auto.offset.reset': 'beginning'
             })
-            Kafka.__consumer.subscribe([kafka_topic])
+            Kafka.__consumer.subscribe([topic])
         return Kafka.__consumer
     @staticmethod
     def getProducer():
@@ -98,13 +98,14 @@ class Cassandra:
     def query(query):
         """
         Metodo estatico que ejecuta la expresion agregada en addQuery()
+        La query debe ser un arreglo
         """
-        return Cassandra.__instance.execute(Cassandra.__statement, [query])
+        return Cassandra.__instance.execute(Cassandra.__statement, query)
 
 class Redis:
     """
-    Clase que engloba los metodos encargados de conectarse a Redis. Ofrece un metodo
-    estatico: getInstance()
+    Clase que engloba los metodos encargados de conectarse a Redis. Ofrece tres metodos
+    estaticos: getInstance(), set(key, value), get(key)
     """
     __instance = None
     @staticmethod
@@ -115,7 +116,7 @@ class Redis:
         - REDIS_HOST: host de Redis
         - REDIS_PORT: port de Redis
         - REDIS_DB: nombre de la base de datos de redis
-
+        - REDIS_PASSWORD: contrasena de redis
         Retorna una instancia de Redis conectada a la base de datos especificada
         """
         if not Redis.__instance:
@@ -127,9 +128,16 @@ class Redis:
         return Redis.__instance
     @staticmethod
     def set(key, value):
+    """
+    Metodo estatico encargado de setear un valor asociado a una llave
+    """
         Redis.__instance.set(key, value)
     @staticmethod
     def get(key):
+    """
+    Metodo estatico encargado de obtener el valor dado una llave.
+    Corresponde a un string con codificacion utf-8
+    """
         return Redis.__instance.get(key).decode('utf-8')
 
 if __name__ == "__main__":
