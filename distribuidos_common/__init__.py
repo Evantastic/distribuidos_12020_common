@@ -78,24 +78,14 @@ class Cassandra:
         Retorna una instancia de Cassandra conectada al keyspace indicado
         """
         if not Cassandra.__instance:
-            tries = 0
-            sleepTime = 10
             host = getenv('CASSANDRA_HOST')
             port = getenv('CASSANDRA_PORT')
             user = getenv('CASSANDRA_USER')
             password = getenv('CASSANDRA_PASSWORD')
             keyspace = getenv('CASSANDRA_KEYSPACE')
             auth_provider = PlainTextAuthProvider(username=user, password=password)
-            while tries < 6:
-                try:
-                    cluster = Cluster([host], port=port, auth_provider=auth_provider)
-                    Cassandra.__instance = cluster.connect(keyspace)
-                    break
-                except NoHostAvailable:
-                    print("Cassandra refused connection. Attempting reconnection in {} seconds".format(sleepTime))
-                    stdout.flush()
-                    tries = tries + 1
-                    sleep(sleepTime)
+            cluster = Cluster([host], port=port, auth_provider=auth_provider)
+            Cassandra.__instance = cluster.connect(keyspace)
         return Cassandra.__instance
     @staticmethod
     def addQuery(statement):
@@ -132,7 +122,8 @@ class Redis:
             host = getenv('REDIS_HOST')
             port = getenv('REDIS_PORT')
             db = getenv('REDIS_DB')
-            Redis.__instance = getRedis(host=host, port=port, db=db)
+            password = getenv('REDIS_PASSWORD')
+            Redis.__instance = getRedis(host=host, port=port, db=db, password=password)
         return Redis.__instance
 
 if __name__ == "__main__":
