@@ -32,7 +32,7 @@ class Kafka:
             group = getenv('KAFKA_GROUPID')
             topic = getenv('KAFKA_TOPIC')
             Kafka.__consumer = Consumer({
-                'bootstrap.servers': host,
+                'bootstrap.servers': hosts,
                 'group.id': group,
                 'auto.offset.reset': 'beginning'
             })
