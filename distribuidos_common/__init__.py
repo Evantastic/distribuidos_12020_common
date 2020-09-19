@@ -28,11 +28,11 @@ class Kafka:
         Retorna instancia de confluent_kafka.Consumer
         """
         if not Kafka.__consumer:
-            hosts = getenv('KAFKA_HOST').split(' ')
+            host = getenv('KAFKA_HOST')
             group = getenv('KAFKA_GROUPID')
             topic = getenv('KAFKA_TOPIC')
             Kafka.__consumer = Consumer({
-                'bootstrap.servers': hosts,
+                'bootstrap.servers': host,
                 'group.id': group,
                 'auto.offset.reset': 'beginning'
             })
